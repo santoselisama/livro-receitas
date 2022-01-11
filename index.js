@@ -17,7 +17,7 @@ connection
 // bodyparser é o cara responsavel por traduzir os
 // dados enviados do formulario de uma estrutura javascript
 const bodyParser = require("body-parser"); 
-const receita = require("./database/Model");
+const escrever = require("./database/Model");
 
 // estou pedindo para o expresse usar o EJS como view engine
 app.set('view engine', 'ejs');
@@ -29,26 +29,45 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json());
 
 app.get("/", (req,res) => {
-    receita.findAll({raw: true}).then(receita => {
+    escrever.findAll({raw: true, order: [
+        ['id','DESC']
+    ]})
+    .then(escrever => {
         res.render("index", {          //aqui estou pedindo que o ejs desenhe uma página
-            receita:receita
+            escrever:escrever
         }); 
     }); 
 });   
 
-app.get("/receita", (req,res) => {
-    res.render("receita") //aqui estou pedindo que o ejs desenhe uma página
+app.get("/escrever", (req,res) => {
+    res.render("escrever") //aqui estou pedindo que o ejs desenhe uma página
 })
 
-app.post("/salvarreceita",(req,res) => { //rota para salvar os dados do formulario
-    var titulo = req.body.titulo;
-    var descricao = req.body.descricao;
+//rota para salvar os dados do formulario
+app.post("/salvarreceita",(req,res) => { 
+    var titulo = req.body.titulo;  // recebo os dados do formulário
+    var descricao = req.body.descricao; //salvo no meu banco de dados
     receita.create({
         titulo:titulo,
-        descricao: descricao
+        descricao: descricao  //e se caso isso aconteça com sucesso
     }).then(() => {
-        res.redirect("/")
-    })                         //INSERT INTO , como se fosse
+        res.redirect("/") // esse then vai redirecionar o usuário para a página inicial
+    })                         
 });
+
+app.get("/receitas/:id", (req, res) => {
+    var id = req.params.id;
+    receitas.findOne({
+        where: {id:id}
+    }).then(receitas => {
+        if(receitas != undefined){ //receita encontrada
+            res.render("receitas",{
+                receitas:receitas
+            });
+        }else{ //não encontrada
+            res.redirect("/");
+        }
+    })
+})
 
 app.listen(3000,() => {console.log("App rodando");});

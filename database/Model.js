@@ -1,13 +1,13 @@
-const sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 const connection = require("./database");
 
-const receita = connection.define('receita', { //aqui eu defino o model
+const receita = connection.define('receita', { //aqui eu defino o nome da tabela
     titulo:{                //aqui eu defino os campos da tabela do banco
-        type:sequelize.STRING,    
+        type:Sequelize.STRING,    
         allowNull:false
     },
     descricao: {            //aqui eu defino os campos da tabela do banco
-        type:sequelize.TEXT,
+        type:Sequelize.TEXT,
         allowNull:false
     }
 });
