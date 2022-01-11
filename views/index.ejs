@@ -1,23 +1,26 @@
 <%- include('./partials/header.ejs'); %>
 <body>
-<%- include('./partials/navbar.ejs'); %>
+    <%- include('./partials/navbar.ejs'); %>
     <div class="container">
         <hr>
         <h3>Lista de Receitas</h3>
         <hr>
-        <a href="/escrever" class="btn btn-primary">Escreva uma receita</a>
+        <a href="/escrever" class="btn btn-success">Escreva uma receita</a>
         <hr>
-        <% escrever.forEach(escrever => { %>
-            <div class="card">
-                <div class="card-body">
-                    <p><%= escrever.titulo %></p>
-                </div>
-                <div class="card-footer"></div>
-                    <button class="btn btn-primary"> Descrição</button></a>
+
+        <div class="card text-center">
+            <% escrever.forEach(escrever => { %>
+                <h4><%= escrever.titulo %></h4>
+                <label>receita foi escrita por um de nossos seguidores. Aproveite!</label> 
+                  <div class="d-grid gap-2 d-md-block">
+                        <a href="/receitas/1"><button class="btn btn-success btn-sm">Ver Receita</button></a>
+                  </div>
+                  <hr>
+                  <hr>
+                  <% }) %>
                 </div>
             </div>
-        <% }) %>    
-    </div>  
-
+        </div>
+    </div>
 </body>
 <%- include('./partials/footer.ejs'); %>
