@@ -4,9 +4,11 @@
 
     <div class="container">
         <hr>
+        <% receitas.forEach(receitas => { %>
         <h3>Título: <%= receitas.titulo %></h3>
         <hr>    
         <p><h3><%= receitas.descricao %></h3></p>
          <a href="/"><button class="btn btn-success">Voltar<button</a>
+        <% }) %>
 </body>
 <%- include('./partials/footer.ejs'); %>
